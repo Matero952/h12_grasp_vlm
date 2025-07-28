@@ -94,7 +94,7 @@ RUN colcon build
 RUN source install/setup.bash
 
 # Set Cyclone DDS config
-RUN export CYCLONEDDS_URI="<CycloneDDS><Domain><General><NetworkInterfaceAddress>lo</NetworkInterfaceAddress></General></Domain></CycloneDDS>"
+# RUN export CYCLONEDDS_URI="<CycloneDDS><Domain><General><NetworkInterfaceAddress>lo</NetworkInterfaceAddress></General></Domain></CycloneDDS>"
 
 # Check for missing dependencies (optional)
 # rosdep install -i --from-path src --rosdistro humble -y
