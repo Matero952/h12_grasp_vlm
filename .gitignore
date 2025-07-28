@@ -1,0 +1,53 @@
+# ROS 2 build artifacts
+**/build/
+**/install/
+**/log/
+**/.devcontainer/
+**/custom_ros_messages/
+
+# ROS 1 catkin artifacts
+devel/
+*.pyc
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.so
+
+# Colcon metadata
+.colcon/
+
+# ROS workspace-specific
+*.swp
+*.bak
+*.DS_Store
+
+# VSCode settings (optional)
+.vscode/
+
+# CMake files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Python virtual environments
+venv/
+env/
+.venv/
+
+# JetBrains IDEs (e.g., CLion)
+.idea/
+
+# Compiled libraries or binaries
+*.out
+*.o
+*.a
+*.so
+*.dll
+*.exe
+
+# Logs or temp files
+*.log
+*.tmp
+*.old
