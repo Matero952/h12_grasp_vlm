@@ -4,7 +4,7 @@
 **/log/
 **/.devcontainer/
 **/custom_ros_messages/
-
+**/microsoft.gpg
 # ROS 1 catkin artifacts
 devel/
 *.pyc
