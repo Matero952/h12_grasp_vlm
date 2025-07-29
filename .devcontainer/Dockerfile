@@ -63,8 +63,9 @@ WORKDIR /ros2_ws
 # && pip install --no-cache-dir git+https://github.com/openai/CLIP.git
 
 # Set CycloneDDS as RMW implementation
+ENV CYCLONEDDS_URI=file:///ros2_ws/cyclonedds.xml
 ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-ENV CYCLONEDDS_URI="<CycloneDDS><Domain><General><Interfaces><NetworkInterface name=\"eth0\" priority=\"default\" multicast=\"default\"/></Interfaces></General></Domain></CycloneDDS>"
+# ENV CYCLONEDDS_URI="<CycloneDDS><Domain><General><Interfaces><NetworkInterface name=\"wlp2s0\" priority=\"default\" multicast=\"default\"/></Interfaces></General></Domain></CycloneDDS>"
 COPY h12_grasp_vlm1.png /ros2_ws/h12_grasp_vlm1.png
 
 # Entry point script to source and conditionally build
@@ -83,7 +84,7 @@ RUN echo '#!/usr/bin/env bash' > /ros_entrypoint.sh && \
     echo 'exec "$@"' >> /ros_entrypoint.sh && \
     chmod +x /ros_entrypoint.sh
 
-RUN echo 'export CYCLONEDDS_URI=file:///ros2_ws/cyclonedds.xml >> ~/.bashrc'
+# RUN echo 'export CYCLONEDDS_URI=file:///ros2_ws/cyclonedds.xml >> ~/.bashrc'
 
 # Create setup.bash with the desired content
 
@@ -98,6 +99,8 @@ RUN echo 'PYTHONPATH=/opt/ros/humble/local/lib/python3.10/dist-packages' > /ros2
 
 RUN apt update
 RUN apt install --only-upgrade ros-humble-geometry-msgs
+RUN apt update
+RUN apt install nano
 
 
 ENTRYPOINT ["/ros_entrypoint.sh"]

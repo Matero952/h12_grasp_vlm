@@ -16,3 +16,5 @@ colcon build --symlink-install
 
 # Source overlay workspace
 source install/setup.bash
+
+source /opt/ros/humble/setup.bash 
