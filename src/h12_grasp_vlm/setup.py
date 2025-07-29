@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'ros_vision_pipe_client = h12_grasp_vlm.ros_vision_pipe_client:run_ros_vision_pipe_client'
         ],
     },
 )
