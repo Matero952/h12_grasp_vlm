@@ -47,9 +47,8 @@ RUN pip3 install --no-cache-dir \
       matplotlib \
       transformers \
       google-genai \
-      Pillow \
-      unitree_sdk2py
-RUN apt-get update && apt-get install -y nano
+      Pillow 
+# RUN apt-get update && apt-get install -y nano
 #RUN pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
 
 
@@ -94,29 +93,11 @@ RUN echo 'export CYCLONEDDS_URI=file:///ros2_ws/cyclonedds.xml >> ~/.bashrc'
 # Check for missing dependencies (optional)
 # rosdep install -i --from-path src --rosdistro humble -y
 # Build workspace
-RUN cat << 'EOF' > /ros2_ws/setup.bash && \
-chmod +x /ros2_ws/setup.bash
-#!/bin/bash
-
-set -e
-cd /ros2_ws
-
-# Clean previous builds
-rm -rf build install log
-
-# Source ROS 2 base setup
-source /opt/ros/humble/setup.bash
-
-# Rebuild
-rosdep install -i --from-path src --rosdistro humble -y
-colcon build --symlink-install
-source install/setup.bash
-EOF
 
 RUN echo 'PYTHONPATH=/opt/ros/humble/local/lib/python3.10/dist-packages' > /ros2_ws/.env
 
-RUN sudo apt update
-RUN sudo apt install --only-upgrade ros-humble-geometry-msgs
+RUN apt update
+RUN apt install --only-upgrade ros-humble-geometry-msgs
 
 
 ENTRYPOINT ["/ros_entrypoint.sh"]

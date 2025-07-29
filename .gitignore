@@ -2,9 +2,11 @@
 **/build/
 **/install/
 **/log/
-**/.devcontainer/
+# **/.devcontainer/
 **/custom_ros_messages/
+**/vision_pipeline/
 **/microsoft.gpg
+**/Docker/
 # ROS 1 catkin artifacts
 devel/
 *.pyc

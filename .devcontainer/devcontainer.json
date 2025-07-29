@@ -1,0 +1,25 @@
+{
+  "name": "ROS Container",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "workspaceFolder": "/ros2_ws",
+  "runArgs": [
+    "--network=host",
+    "-e", "DISPLAY=${env:DISPLAY}",
+    "-e", "QT_X11_NO_MITSHM=1",
+    "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+    "-v", "/etc/localtime:/etc/localtime:ro",
+    "-v", "/etc/timezone:/etc/timezone:ro",
+    "-v", "${localWorkspaceFolder}:/ros2_ws"
+  ],
+  "extensions": [
+    "ms-iot.vscode-ros",
+    "ms-python.python",
+    "ms-vscode.cpptools"
+  ],
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash"
+  }
+}
