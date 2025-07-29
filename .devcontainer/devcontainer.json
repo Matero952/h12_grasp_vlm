@@ -21,5 +21,15 @@
   ],
   "settings": {
     "terminal.integrated.defaultProfile.linux": "bash"
+  },
+  
+  "python.envFile": "${workspaceFolder}/.env"
   }
-}
+  
+//   "remoteEnv": {
+//   "AMENT_PREFIX_PATH": "/ros2_ws/install:/opt/ros/humble",
+//   "PYTHONPATH": "/ros2_ws/install/vision_pipeline/lib/python3.10/site-packages:/ros2_ws/install/h12_grasp_vlm/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages"
+// },
+
+//   "python.pythonPath": "/usr/bin/python3"
+

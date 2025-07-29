@@ -10,7 +10,7 @@
 # ROS 1 catkin artifacts
 devel/
 *.pyc
-
+**/.env
 # Python cache
 __pycache__/
 *.py[cod]
