@@ -1,0 +1,1 @@
+![Diagram](h12_grasp_vlm1.png)

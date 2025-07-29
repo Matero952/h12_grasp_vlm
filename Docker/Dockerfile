@@ -47,10 +47,10 @@ RUN pip3 install --no-cache-dir \
       matplotlib \
       transformers \
       google-genai \
-      Pillow
-
-RUN apt install nano
-RUN pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
+      Pillow \
+      unitree_sdk2py
+RUN apt-get update && apt-get install -y nano
+#RUN pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
 
 
 # Install SAM2 repo
@@ -66,6 +66,7 @@ WORKDIR /ros2_ws
 # Set CycloneDDS as RMW implementation
 ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 ENV CYCLONEDDS_URI="<CycloneDDS><Domain><General><Interfaces><NetworkInterface name=\"eth0\" priority=\"default\" multicast=\"default\"/></Interfaces></General></Domain></CycloneDDS>"
+COPY h12_grasp_vlm1.png /ros2_ws/h12_grasp_vlm1.png
 
 # Entry point script to source and conditionally build
 RUN echo '#!/usr/bin/env bash' > /ros_entrypoint.sh && \
@@ -86,12 +87,6 @@ RUN echo '#!/usr/bin/env bash' > /ros_entrypoint.sh && \
 RUN echo 'export CYCLONEDDS_URI=file:///ros2_ws/cyclonedds.xml >> ~/.bashrc'
 
 # Create setup.bash with the desired content
-RUN echo '#!/bin/bash
-# Source ROS setup files
-RUN source /opt/ros/humble/setup.bash
-RUN rosdep install -i --from-path src --rosdistro humble -y
-RUN colcon build
-RUN source install/setup.bash
 
 # Set Cyclone DDS config
 # RUN export CYCLONEDDS_URI="<CycloneDDS><Domain><General><NetworkInterfaceAddress>lo</NetworkInterfaceAddress></General></Domain></CycloneDDS>"
@@ -99,7 +94,24 @@ RUN source install/setup.bash
 # Check for missing dependencies (optional)
 # rosdep install -i --from-path src --rosdistro humble -y
 # Build workspace
-RUN echo "ROS 2 and Cyclone DDS environment set up!"' > /ros2_ws/setup.bash && chmod +x /ros2_ws/setup.bash
+RUN cat << 'EOF' > /ros2_ws/setup.bash && \
+chmod +x /ros2_ws/setup.bash
+#!/bin/bash
+
+set -e
+cd /ros2_ws
+
+# Clean previous builds
+rm -rf build install log
+
+# Source ROS 2 base setup
+source /opt/ros/humble/setup.bash
+
+# Rebuild
+rosdep install -i --from-path src --rosdistro humble -y
+colcon build --symlink-install
+source install/setup.bash
+EOF
 
 RUN echo 'PYTHONPATH=/opt/ros/humble/local/lib/python3.10/dist-packages' > /ros2_ws/.env
 
