@@ -1,0 +1,6 @@
+string query
+---
+sensor_msgs/PointCloud2 cloud
+float32 prob
+bool result
+string message

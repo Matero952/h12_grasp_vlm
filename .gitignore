@@ -3,7 +3,7 @@
 **/install/
 **/log/
 # **/.devcontainer/
-**/custom_ros_messages/
+# **/custom_ros_messages/
 **/vision_pipeline/
 **/microsoft.gpg
 **/Docker/

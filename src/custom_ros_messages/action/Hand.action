@@ -1,0 +1,22 @@
+#Goal
+float32 0_pinky_target
+float32 1_ring_target
+float32 2_middle_target
+float32 3_index_target
+float32 4_thumb_target
+float32 5_thumb_angle_target
+#We only need float32 for each because a 0 represents closed, a 1 represents open, and 
+#intermediate values represent different things i dont know. thats lowk all i understand rn
+#i gotta ask william.
+---
+#Result
+bool success
+---
+#Feedback
+float32 0_pinky_target_angular_error
+float32 1_ring_target_angular_error
+float32 2_middle_target_angular_error
+float32 3_index_target_angular_error
+float32 4_thumb_target_angular_error
+#Ok right now i think we are just talking about angular error, but eventually
+#when we start picking up complicated shit I think that this will also transform into linear error
