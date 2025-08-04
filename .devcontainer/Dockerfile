@@ -15,6 +15,7 @@ RUN apt-get update && \
       python3 python3-pip python-is-python3 && \
     rm -rf /var/lib/apt/lists/*
 
+# RUN pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
 
 # Re-import ROS 2 key and repo
 # RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc \
@@ -49,7 +50,7 @@ RUN pip3 install --no-cache-dir \
       google-genai \
       Pillow 
 # RUN apt-get update && apt-get install -y nano
-#RUN pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
+RUN pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
 
 
 # Install SAM2 repo
@@ -94,14 +95,24 @@ RUN echo '#!/usr/bin/env bash' > /ros_entrypoint.sh && \
 # Check for missing dependencies (optional)
 # rosdep install -i --from-path src --rosdistro humble -y
 # Build workspace
-
+# RUN echo "Cache bust: $(date)" > /tmp/cachebust
 RUN echo 'PYTHONPATH=/opt/ros/humble/local/lib/python3.10/dist-packages' > /ros2_ws/.env
+
 
 RUN apt update
 RUN apt install --only-upgrade ros-humble-geometry-msgs
 RUN apt update
 RUN apt install nano
+WORKDIR /opt/sam2
+RUN git clone https://github.com/facebookresearch/sam2.git . && \
+    pip3 install --no-cache-dir -e .
+WORKDIR /ros2_ws
 
+WORKDIR /ros2_ws
+
+# Install Ultralytics + CLIP
+RUN pip install --no-cache-dir ultralytics \
+ && pip install --no-cache-dir git+https://github.com/openai/CLIP.git
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
