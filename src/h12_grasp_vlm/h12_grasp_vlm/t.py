@@ -146,66 +146,6 @@ class MoveArmToPointCloud(Node):
                 cropped_points.append(p)
 
         print(f'len points after: {len(cropped_points)}')
-            
-
-
-    # def crop_to_best_box(self, best_box, pc):
-    #     #requires that best_boox and pc are already sorted in x ascending, y ascending, and z ascending.
-    #     #I think we can first eliminate those that are outside x, and then those that are outside y, and then those that are outsize z
-    #     def get_upper_bound(pts, which_val: str, best_val):
-    #         assert which_val == 'x' or which_val == 'y' or which_val == 'z'
-    #         left = 0
-    #         right = len(pts)
-    #         if which_val == 'x':
-    #             idx = 0
-    #         elif which_val == 'y':
-    #             idx = 1
-    #         else:
-    #             idx = 2
-    #         while left < right:
-    #             mid = left + (right - left) // 2
-    #             if pts[mid][idx] <= best_val:
-    #                 left = mid + 1
-    #             else:
-    #                 right = mid
-    #         return left
-        
-    #     def get_lower_bound(pts, which_val:str, lowest_val):
-    #         assert which_val == 'x' or which_val == 'y' or which_val == 'z'
-    #         left = 0
-    #         right = len(pts)
-    #         if which_val == 'x':
-    #             idx = 0
-    #         elif which_val == 'y':
-    #             idx = 1
-    #         else:
-    #             idx = 2
-
-    #         while left < right:
-    #             mid = left + (right - left) // 2
-    #             if pts[mid][idx] < lowest_val:
-    #                 left = mid + 1
-    #             else:
-    #                 right = mid
-
-    #         return left
-
-    #     lower_x_indx = get_lower_bound(pc, 'x', list(best_box)[0][0])
-    #     upper_x_indx = get_upper_bound(pc, 'x', list(best_box)[len(best_box) - 1][0])
-
-    #     pc = pc[lower_x_indx: upper_x_indx]
-
-    #     lower_y_indx = get_lower_bound(pc, 'y', list(best_box)[0][1])
-    #     upper_y_indx = get_upper_bound(pc, 'y', list(best_box)[len(best_box) - 1][1])
-
-    #     pc = pc[lower_y_indx : upper_y_indx]
-
-    #     lower_z_indx = get_lower_bound(pc, 'z', list(best_box)[0][2])
-    #     upper_z_indx = get_upper_bound(pc, 'z', list(best_box)[len(best_box) - 1][2])
-    
-    #     pc = pc[lower_z_indx : upper_y_indx]
-
-    #     return pc
         
     def create_cropped_cloud_ros_object(self, cropped_cloud):
         def rgb_to_float(r, g, b):
