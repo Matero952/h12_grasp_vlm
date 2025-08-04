@@ -15,6 +15,7 @@ import os
 import sys
 import numpy as np
 import struct
+import open3d as o3d
 from std_msgs.msg import Float64MultiArray
 ros_dir = os.path.dirname(os.path.realpath(__file__))
 parent_dir = os.path.join(ros_dir, "..")
@@ -133,7 +134,8 @@ class main_node(Node):
         #assumes that objects are already being tracked, preferably we just have two queryes right and then we calculate which one is closer to which hand.
         #SO WE NEED TO USE THE ROBOT MODEL AND THEN QUERY THE POSITIONS OF THE HANDS BY THEIR FRAME!!!
         print(querries)
-        pc_as_nd_arrays = [self.parse_pointcloud2_to_xyz_rgb(query) for query in querries]
+        pc_as_o3d = [msg_to_pcd(query) for query in querries]
+        pc_as_nd_arrays = [self.convert_open3d_pc_to_numpy(o3d_pcd) for o3d_pcd in pc_as_o3d]
         #Ok so for now well just assume that we have the robot model loaded
         #So the hand base links will give the position in space but the depth frames and img frames will give the rotation of the frame as well so idk if we want that - yutong
         left_hand_xyz = robot_model_instance.get_frame_position('L_hand_base_link')
@@ -152,23 +154,16 @@ class main_node(Node):
         mag_pc_center_1_left_h = np.linalg.norm(pc_center_1_left_h_vec)
         mag_pc_center_0_right_h = np.linalg.norm(pc_center_0_right_h_vec)
         mag_pc_center_1_right_h = np.linalg.norm(pc_center_1_left_h_vec)
-
         if mag_pc_center_0_left_h + mag_pc_center_1_right_h > mag_pc_center_1_left_h + mag_pc_center_0_right_h:
             output_dict['left'] = querries[0]
             output_dict['right'] = querries[1]
-
         else:
             output_dict['left'] = querries[1]
             output_dict['right'] = querries[0]
-
         return output_dict
         
-        
-
-
         #ok so now we can run a calculation to find the error between each object and each hand, 
         # but how do we know which part of the object we want?!
-
 
     def compute_pc_center(self, pc: np.ndarray):
         x_sum, y_sum, z_sum = 0, 0, 0
@@ -182,30 +177,33 @@ class main_node(Node):
         return np.array(x_sum/counter, y_sum/counter, z_sum/counter)
 
         
-    def parse_pointcloud2_to_xyz_rgb(self, msg):
-        num_points = msg.width * msg.height
-        # print(f'{num_points=}')
-        # breakpoint()
-        points_xyz_rgb = np.zeros((num_points, 6), dtype=np.float32)
-        for i in range(num_points):
-            point_offset = i * msg.point_step
-            x = struct.unpack('f', msg.data[point_offset:point_offset+4])[0]
-            y = struct.unpack('f', msg.data[point_offset+4:point_offset+8])[0]
-            z = struct.unpack('f', msg.data[point_offset+8:point_offset+12])[0]
-            # print(f'{x=}, {y=}, {z=}')
-            rgb_float = struct.unpack('f', msg.data[point_offset+12:point_offset+16])[0]
-            rgb_int = struct.unpack('I', struct.pack('f', rgb_float))[0]
-            r = (rgb_int >> 16) & 0xFF
-            g = (rgb_int >> 8) & 0xFF  
-            b = rgb_int & 0xFF
-            # print(f'{r=}, {g=}, {b=}')
-            points_xyz_rgb[i] = [x, y, z, r, g, b]
-            # breakpoint()
-        return points_xyz_rgb
+    # def convert_msg_to_open3d_pc(self, msg)
+    def convert_open3d_pc_to_numpy(self, pcd: o3d.geometry.PointCloud):
+        xyz = np.asarray(pcd.points)
+        rgb = np.asarray(pcd.colors) if pcd.has_colors() else None
+        xyz_rgb = np.hstack((xyz, rgb))
+        return xyz_rgb
 
-
-        
-
+    # def parse_pointcloud2_to_xyz_rgb(self, msg):
+    #     num_points = msg.width * msg.height
+    #     # print(f'{num_points=}')
+    #     # breakpoint()
+    #     points_xyz_rgb = np.zeros((num_points, 6), dtype=np.float32)
+    #     for i in range(num_points):
+    #         point_offset = i * msg.point_step
+    #         x = struct.unpack('f', msg.data[point_offset:point_offset+4])[0]
+    #         y = struct.unpack('f', msg.data[point_offset+4:point_offset+8])[0]
+    #         z = struct.unpack('f', msg.data[point_offset+8:point_offset+12])[0]
+    #         # print(f'{x=}, {y=}, {z=}')
+    #         rgb_float = struct.unpack('f', msg.data[point_offset+12:point_offset+16])[0]
+    #         rgb_int = struct.unpack('I', struct.pack('f', rgb_float))[0]
+    #         r = (rgb_int >> 16) & 0xFF
+    #         g = (rgb_int >> 8) & 0xFF  
+    #         b = rgb_int & 0xFF
+    #         # print(f'{r=}, {g=}, {b=}')
+    #         points_xyz_rgb[i] = [x, y, z, r, g, b]
+    #         # breakpoint()
+    #     return points_xyz_rgb
 
 def main():
     rclpy.init()
@@ -218,22 +216,28 @@ def main():
     time.sleep(3)
     querries = [node.query_objects(i) for i in objects]
     print(querries)
-    vertical_offset = 0.2
-    # r_hand_goal = [0.3, -0.2, 0.5, 0, 0, 0]
-    # l_hand_goal = [0.3, 0.2, 0.5, 0, 0, 0]
-    # res = node.send_arm_goal(
-    #         l_hand_goal,
-    #         r_hand_goal
-    #     )
-    breakpoint()
-    # r_hand_goal = 
+    vertical_offset = 0.3
+    r_hand_goal = [0, 0, 0, 0, 0, 0]
+    l_hand_pc_o3d = msg_to_pcd(querries[0])
+    l_hand_pc = node.convert_open3d_pc_to_numpy(l_hand_pc_o3d)
+    l_hand_pc_center = node.compute_pc_center(l_hand_pc)
+    l_hand_pc_center[2] += 0.5
+    l_hand_goal = l_hand_pc_center
     
-    r_hand_goal = [0.3, -0.2, 0.2+vertical_offset, 0, 90, 0]
-    l_hand_goal = [0.3, 0.2, 0.2+vertical_offset, 0, 90, 0]
+    # l_hand_goal = [0.3, 0.2, 0.5, 0, 0, 0]
     res = node.send_arm_goal(
             l_hand_goal,
             r_hand_goal
         )
+    # breakpoint()
+    # r_hand_goal = 
+    
+    # r_hand_goal = [0.3, -0.2, 0.2+vertical_offset, 0, 90, 0]
+    # l_hand_goal = [0.3, 0.2, 0.2+vertical_offset, 0, 90, 0]
+    # res = node.send_arm_goal(
+    #         l_hand_goal,
+    #         r_hand_goal
+    #     )
     node.publish_hand_targets([0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0])
     last_input = ""
     while last_input != "q":
@@ -259,13 +263,10 @@ def main():
             print("Failed to query tracked objects after maximum tries.")
             return
         print(f"Query result: {query.result}, message: {query.message}")
-
         pcd = msg_to_pcd(query.cloud)
+
         center = pcd.get_center()
         print(f"Point cloud center: {center}")
-
-
-
         if center[1] > 0:
             l_hand_goal = [center[0], center[1], center[2]+vertical_offset, 0, 90, 0]
         else:
