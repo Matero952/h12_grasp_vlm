@@ -7,7 +7,12 @@
 **/vision_pipeline/
 **/microsoft.gpg
 **/Docker/
+**/h12_ros2_controller/
+**/h12_ros2_controller/
+**/h12_ros2_model/
 # ROS 1 catkin artifacts
+frames_*
+output_*
 devel/
 *.pyc
 **/.env

@@ -49,6 +49,9 @@ RUN pip3 install --no-cache-dir \
       transformers \
       google-genai \
       Pillow 
+      # unitree-sdk2py
+
+
 # RUN apt-get update && apt-get install -y nano
 RUN pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
 
@@ -113,6 +116,13 @@ WORKDIR /ros2_ws
 # Install Ultralytics + CLIP
 RUN pip install --no-cache-dir ultralytics \
  && pip install --no-cache-dir git+https://github.com/openai/CLIP.git
+
+RUN apt update
+RUN pip install pin
+RUN pip install meshcat
+RUN pip install meshcat-shapes
+RUN pip install pin-pink
+RUN pip install unitree_sdk2py
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]

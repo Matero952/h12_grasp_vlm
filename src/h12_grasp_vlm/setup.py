@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'ros_vision_pipe_client = h12_grasp_vlm.move_arm_to_pc:main',
+            'ros_vision_pipe_client = h12_grasp_vlm.move_arm_to_tracked_object:main',
             # 'main = vision_pipeline.ROS.main:main'
         ],
     },

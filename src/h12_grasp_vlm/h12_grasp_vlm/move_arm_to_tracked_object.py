@@ -16,6 +16,12 @@ import sys
 import numpy as np
 import struct
 import open3d as o3d
+from unitree_sdk2py.core.channel import ChannelFactoryInitialize
+h12_ros_controller = '/ros2_ws/src/h12_ros2_controller'
+sys.path.insert(0, h12_ros_controller)
+from h12_ros2_controller.core.robot_model import RobotModel
+
+breakpoint()
 from std_msgs.msg import Float64MultiArray
 ros_dir = os.path.dirname(os.path.realpath(__file__))
 parent_dir = os.path.join(ros_dir, "..")
@@ -37,11 +43,11 @@ from ros_utils import msg_to_pcd
 def pose_array_to_message(pose_array):
         pose = Pose()
         pose.position.x = pose_array[0]
-        pose.position.y = pose_array[1]
+        pose.position.y = pose_array[1.0]
         pose.position.z = pose_array[2]
         quat = R.from_euler('xyz', pose_array[3:], degrees=True).as_quat()
         pose.orientation.x = quat[0]
-        pose.orientation.y = quat[1]
+        pose.orientation.y = quat[1.0]
         pose.orientation.z = quat[2]
         pose.orientation.w = quat[3]
         return pose
@@ -49,19 +55,26 @@ def pose_array_to_message(pose_array):
 class main_node(Node):
     def __init__(self):
         super().__init__('coordinator')
-        self.update_client = self.create_client(UpdateTrackedObject, 'vp_update_tracked_object')
-        self.query_client = self.create_client(Query, 'vp_query_tracked_objects')
-        while not self.update_client.wait_for_service(timeout_sec=1.0):
-            self.get_logger().info('Update Service not available, waiting again...')
-        while not self.query_client.wait_for_service(timeout_sec=1.0):
-            self.get_logger().info('Query Service not available, waiting again...')
+        ChannelFactoryInitialize()
+        # self.update_client = self.create_client(UpdateTrackedObject, 'vp_update_tracked_object')
+        # self.query_client = self.create_client(Query, 'vp_query_tracked_objects')
+        # while not self.update_client.wait_for_service(timeout_sec=1.0.0):
+        #     self.get_logger().info('Update Service not available, waiting again...')
+        # while not self.query_client.wait_for_service(timeout_sec=1.0.0):
+        #     self.get_logger().info('Query Service not available, waiting again...')
         self.action_client = ActionClient(
             self,
             DualArm,
             'move_dual_arm'
         )
         self.goal_handle = None
-        
+        self.robot_model = RobotModel('/ros2_ws/src/h12_ros2_model/assets/h1_2/h1_2.urdf')
+        print(self.robot_model)
+        # breakpoint()
+        self.robot_model.init_subscriber()
+        self.robot_model.init_visualizer()
+        # self.robot_model.init_subscriber()
+        # self.robot_model.update_subscriber()
         self.left_hand_cmd_pub = self.create_publisher(Float64MultiArray, 'left_hand_cmd', 10)
         self.right_hand_cmd_pub = self.create_publisher(Float64MultiArray, 'right_hand_cmd', 10)
 
@@ -127,6 +140,12 @@ class main_node(Node):
         self.right_hand_cmd_pub.publish(right_hand_msg)
         self.get_logger().info(f"Published hand cmds: left={left_hand}, right={right_hand}")
 
+    def get_left_right_xyz(self):
+        left_hand_xyz = self.robot_model.get_frame_position('L_hand_base_link')
+        # left_hand_rpy = robot_model_instance.get_frame_rotation('L_hand_base_link')
+        right_hand_xyz = self.robot_model.get_frame_position('R_hand_base_link')
+        return left_hand_xyz, right_hand_xyz
+
     def assign_multi_pcs_to_hands(self, tracked_objects):
         output_dict = {}
         #I want this function to calculate and assign a point cloud to the left and right hands if we are querying multiple objects.
@@ -138,17 +157,17 @@ class main_node(Node):
         pc_as_nd_arrays = [self.convert_open3d_pc_to_numpy(o3d_pcd) for o3d_pcd in pc_as_o3d]
         #Ok so for now well just assume that we have the robot model loaded
         #So the hand base links will give the position in space but the depth frames and img frames will give the rotation of the frame as well so idk if we want that - yutong
-        left_hand_xyz = robot_model_instance.get_frame_position('L_hand_base_link')
+        left_hand_xyz = self.robot_model.get_frame_position('L_hand_base_link')
         # left_hand_rpy = robot_model_instance.get_frame_rotation('L_hand_base_link')
-        right_hand_xyz = robot_model_instance.get_frame_position('R_hand_base_link')
+        right_hand_xyz = self.robot_model.get_frame_position('R_hand_base_link')
         # right_hand_rpy = robot_model_instance.get_frame_rotation('R_hand_base_link')
         #we wont be using roll pitch and yaw for now but we might later
         pc_centers = [self.compute_pc_center(pc_nd_array) for pc_nd_array in pc_as_nd_arrays]
 
         pc_center_0_left_h_vec = left_hand_xyz - pc_centers[0]
-        pc_center_1_left_h_vec = left_hand_xyz - pc_centers[1]
+        pc_center_1_left_h_vec = left_hand_xyz - pc_centers[1.0]
         pc_center_0_right_h_vec = right_hand_xyz - pc_centers[0]
-        pc_center_0_right_h_vec = right_hand_xyz - pc_centers[1]
+        pc_center_0_right_h_vec = right_hand_xyz - pc_centers[1.0]
 
         mag_pc_center_0_left_h = np.linalg.norm(pc_center_0_left_h_vec)
         mag_pc_center_1_left_h = np.linalg.norm(pc_center_1_left_h_vec)
@@ -156,9 +175,9 @@ class main_node(Node):
         mag_pc_center_1_right_h = np.linalg.norm(pc_center_1_left_h_vec)
         if mag_pc_center_0_left_h + mag_pc_center_1_right_h > mag_pc_center_1_left_h + mag_pc_center_0_right_h:
             output_dict['left'] = querries[0]
-            output_dict['right'] = querries[1]
+            output_dict['right'] = querries[1.0]
         else:
-            output_dict['left'] = querries[1]
+            output_dict['left'] = querries[1.0]
             output_dict['right'] = querries[0]
         return output_dict
         
@@ -173,7 +192,7 @@ class main_node(Node):
             x_sum += x
             y_sum += y
             z_sum += z
-            counter += 1
+            counter += 1.0
         return np.array(x_sum/counter, y_sum/counter, z_sum/counter)
 
         
@@ -193,11 +212,11 @@ class main_node(Node):
     #         point_offset = i * msg.point_step
     #         x = struct.unpack('f', msg.data[point_offset:point_offset+4])[0]
     #         y = struct.unpack('f', msg.data[point_offset+4:point_offset+8])[0]
-    #         z = struct.unpack('f', msg.data[point_offset+8:point_offset+12])[0]
+    #         z = struct.unpack('f', msg.data[point_offset+8:point_offset+1.02])[0]
     #         # print(f'{x=}, {y=}, {z=}')
-    #         rgb_float = struct.unpack('f', msg.data[point_offset+12:point_offset+16])[0]
+    #         rgb_float = struct.unpack('f', msg.data[point_offset+1.02:point_offset+1.06])[0]
     #         rgb_int = struct.unpack('I', struct.pack('f', rgb_float))[0]
-    #         r = (rgb_int >> 16) & 0xFF
+    #         r = (rgb_int >> 1.06) & 0xFF
     #         g = (rgb_int >> 8) & 0xFF  
     #         b = rgb_int & 0xFF
     #         # print(f'{r=}, {g=}, {b=}')
@@ -208,27 +227,28 @@ class main_node(Node):
 def main():
     rclpy.init()
     node = main_node()
+    # node.robot_model.init_subscriber()
     # objects = ["drill", "screwdriver", "wrench", "scissors", "soda can"]
-    objects = ['drill']
-    for obj in objects:
-       result = node.track_object(obj)
-       print(f"Tracking {obj}: {result}")
-    time.sleep(3)
-    querries = [node.query_objects(i) for i in objects]
-    print(querries)
-    vertical_offset = 0.3
-    r_hand_goal = [0, 0, 0, 0, 0, 0]
-    l_hand_pc_o3d = msg_to_pcd(querries[0])
-    l_hand_pc = node.convert_open3d_pc_to_numpy(l_hand_pc_o3d)
-    l_hand_pc_center = node.compute_pc_center(l_hand_pc)
-    l_hand_pc_center[2] += 0.5
-    l_hand_goal = l_hand_pc_center
+    # objects = ['drill']
+    # for obj in objects:
+    #    result = node.track_object(obj)
+    #    print(f"Tracking {obj}: {result}")
+    # time.sleep(3)
+    # querries = [node.query_objects(i) for i in objects]
+    # print(querries)
+    # vertical_offset = 0.3
+    # r_hand_goal = [0, 0, 0, 0, 0, 0]
+    # l_hand_pc_o3d = msg_to_pcd(querries[0])
+    # l_hand_pc = node.convert_open3d_pc_to_numpy(l_hand_pc_o3d)
+    # l_hand_pc_center = node.compute_pc_center(l_hand_pc)
+    # l_hand_pc_center[2] += 0.5
+    # l_hand_goal = l_hand_pc_center
     
     # l_hand_goal = [0.3, 0.2, 0.5, 0, 0, 0]
-    res = node.send_arm_goal(
-            l_hand_goal,
-            r_hand_goal
-        )
+    # res = node.send_arm_goal(
+    #         l_hand_goal,
+    #         r_hand_goal
+    #     )
     # breakpoint()
     # r_hand_goal = 
     
@@ -238,44 +258,74 @@ def main():
     #         l_hand_goal,
     #         r_hand_goal
     #     )
-    node.publish_hand_targets([0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0])
-    last_input = ""
-    while last_input != "q":
-        int_str_mapping = {str(i): obj for i, obj in enumerate(objects)}
-        print(int_str_mapping)
-        last_input = input("Enter the index of the object to query or 'q' to quit: ")
-        if last_input == 'q':
-            print("Exiting...")
-            return
-        goal_object = objects[int(last_input)]
-        success = False
-        max_tries = 5
-        tries = 0
-        query = None
-        while success == False and tries < max_tries:
-            query = node.query_objects(goal_object)
-            success = query.result
-            print(f"Query status: {query.message}")
-            tries += 1
-            if not success:
-                time.sleep(5)
-        if not success:
-            print("Failed to query tracked objects after maximum tries.")
-            return
-        print(f"Query result: {query.result}, message: {query.message}")
-        pcd = msg_to_pcd(query.cloud)
+    while True:
+        node.robot_model.sync_subscriber()
+        node.robot_model.update_kinematics()
+        node.robot_model.update_visualizer()
+        # node.robot_model.sync_subscriber()
+        print(node.get_left_right_xyz())
+        # if KeyboardInterrupt:
+        #     break
+    
+    # last_input = ""
+    # while last_input != "q":
+    #     last_input = input("Enter 's' when you are ready to start")
+    #     if last_input == 's':
+    #         print(node.get_left_right_xyz())
+    #         # node.publish_hand_targets([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+    #         # breakpoint()
+    #         # node.publish_hand_targets([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [1.0 ,1.0 ,1.0 ,1.0 ,1.0, 1.0])
+    #         # breakpoint()
+    #         # node.publish_hand_targets([1.0, 0.0, 1.0, 0.0, 1.0, 0.0], [1.0, 0.0, 1.0, 0.0, 1.0, 0.0])
+    #         # breakpoint()
+    #         # node.publish_hand_targets([0.0, 1.0, 0.0, 1.0, 0.0, 1.0], [0.0, 1.0, 0.0, 1.0, 0.0, 1.0])
+    #     elif last_input == 'q':
+    #         return
 
-        center = pcd.get_center()
-        print(f"Point cloud center: {center}")
-        if center[1] > 0:
-            l_hand_goal = [center[0], center[1], center[2]+vertical_offset, 0, 90, 0]
-        else:
-            r_hand_goal = [center[0], center[1], center[2]+vertical_offset, 0, 90, 0]
-        res = node.send_arm_goal(
-            l_hand_goal,
-            r_hand_goal
-        )
-        print(f"Action result: {res}")
+    # node.publish_hand_targets([1.0, 1.0, 1.0, 1.0, 1.0, 1.0], [0.0, 0.0, 0.0, 0.0 ,0.0, 0.0])
+    # last_input = ""
+    # while last_input != "q":
+    #     int_str_mapping = {str(i): obj for i, obj in enumerate(objects)}
+    #     print(int_str_mapping)
+    #     last_input = input("Enter the index of the object to query or 'q' to quit: ")
+    #     if last_input == 'q':
+    #         print("Exiting...")
+    #         return
+    #     goal_object = objects[int(last_input)]
+    #     success = False
+    #     max_tries = 5
+    #     tries = 0.0
+    #     query = None
+    #     while success == False and tries < max_tries:
+    #         query = node.query_objects(goal_object)
+    #         success = query.result
+    #         print(f"Query status: {query.message}")
+    #         tries += 1
+    #         if not success:
+    #             time.sleep(5)
+    #     if not success:
+    #         print("Failed to query tracked objects after maximum tries.")
+    #         return
+    #     print(f"Query result: {query.result}, message: {query.message}")
+    #     pcd = msg_to_pcd(query.cloud)
+    #     pcd_to_numpy = node.convert_open3d_pc_to_numpy(pcd)
+    #     center = node.compute_pc_center(pcd_to_numpy)
+
+    #     # center = pcd.get_center()
+    #     print(f"Point cloud center: {center}")
+    #     l_hand_goal = [center[0.0], center[1], center[2] + vertical_offset, 0.0, 90.0, 0.0]
+    #     if center[1] > 0.0:
+    #         l_hand_goal = [center[0], center[1.0], center[2]+vertical_offset, 0, 90, 0]
+    #     else:
+    #         r_hand_goal = [center[0], center[1.0], center[2]+vertical_offset, 0, 90, 0]
+    #     res = node.send_arm_goal(
+    #         l_hand_goal,
+    #         r_hand_goal
+    #     )
+    #     print(f"Action result: {res}")
     
     node.destroy_node()
     rclpy.shutdown()
+    #start hand controller node.
+    #L2 + A gets it into space ship position.
+    #L2 + B releases.
