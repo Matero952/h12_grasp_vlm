@@ -1,0 +1,736 @@
+Initializing RealSenseSubscriber for camera: head
+Initializing RealSenseSubscriber for camera: left_hand
+len(VP.track_strings)=0 Update Status:
+   head: FAILED (no pose data, no track strings)
+   left_hand: FAILED (no track strings)
+
+len(VP.track_strings)=0 Update Status:
+   head: FAILED (no track strings)
+   left_hand: FAILED (no track strings)
+
+len(VP.track_strings)=0 Update Status:
+   head: FAILED (no track strings)
+   left_hand: FAILED (no track strings)
+
+len(VP.track_strings)=0 Update Status:
+   head: FAILED (no track strings)
+   left_hand: FAILED (no track strings)
+
+len(VP.track_strings)=0 Update Status:
+   head: FAILED (no track strings)
+   left_hand: FAILED (no track strings)
+
+len(VP.track_strings)=0 Update Status:
+   head: FAILED (no track strings)
+   left_hand: FAILED (no track strings)
+
+len(VP.track_strings)=0 Update Status:
+   head: FAILED (no track strings)
+   left_hand: FAILED (no track strings)
+
+len(VP.track_strings)=0 Update Status:
+   head: FAILED (no track strings)
+   left_hand: FAILED (no track strings)
+
+len(VP.track_strings)=0 Update Status:
+   head: FAILED (no track strings)
+   left_hand: FAILED (no track strings)
+
+len(VP.track_strings)=0 Update Status:
+   head: FAILED (no track strings)
+   left_hand: FAILED (no track strings)
+
+len(VP.track_strings)=0 Update Status:
+   head: FAILED (no track strings)
+   left_hand: FAILED (no track strings)
+
+len(VP.track_strings)=0 Update Status:
+   head: FAILED (no track strings)
+   left_hand: FAILED (no track strings)
+
+Received request to add track string: white can
+Received request to add track string: red can
+Acquired lock for querying tracked objects.
+request.query='white can' request.query not in self.tracked_objects=True
+Acquired lock for querying tracked objects.
+request.query='red can' request.query not in self.tracked_objects=True
+
+
+[get_pcd_bbox] len(pts)=2089 len(cls)=2089
+[get_pcd_bbox] pcd=PointCloud with 2089 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.762129, -0.161448, -0.223345), max: (0.876672, -0.0831624, -0.100262)
+
+
+[get_pcd_bbox] len(pts)=2636 len(cls)=2636
+[get_pcd_bbox] pcd=PointCloud with 2636 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.65036, 0.267075, -0.229228), max: (0.748952, 0.334803, -0.107029)
+
+
+[get_pcd_bbox] len(pts)=1413 len(cls)=1413
+[get_pcd_bbox] pcd=PointCloud with 1413 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.15337, -1.65407, -0.882763), max: (2.39527, -1.4675, -0.663203)
+
+
+[get_pcd_bbox] len(pts)=100317 len(cls)=100317
+[get_pcd_bbox] pcd=PointCloud with 100317 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.518615, -0.956322, -1.00942), max: (1.56411, 0.486953, -0.123655)
+
+
+[get_pcd_bbox] len(pts)=177 len(cls)=177
+[get_pcd_bbox] pcd=PointCloud with 177 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.666277, 0.289456, -0.124049), max: (0.681244, 0.314551, -0.116951)
+
+
+[get_pcd_bbox] len(pts)=1341 len(cls)=1341
+[get_pcd_bbox] pcd=PointCloud with 1341 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.59776, -1.33551, -0.895666), max: (1.74292, -1.00081, -0.752685)
+
+
+[get_pcd_bbox] len(pts)=269 len(cls)=269
+[get_pcd_bbox] pcd=PointCloud with 269 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.762129, -0.150136, -0.197865), max: (0.796497, -0.104509, -0.125316)
+
+
+[get_pcd_bbox] len(pts)=1733 len(cls)=1733
+[get_pcd_bbox] pcd=PointCloud with 1733 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.29364, -0.896403, -0.898876), max: (2.98054, -0.29241, -0.463102)
+
+
+[get_pcd_bbox] len(pts)=574 len(cls)=574
+[get_pcd_bbox] pcd=PointCloud with 574 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.20653, -1.53393, -0.858378), max: (2.47179, -1.31654, -0.582269)
+
+
+[get_pcd_bbox] len(pts)=2295 len(cls)=2295
+[get_pcd_bbox] pcd=PointCloud with 2295 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.565064, -0.17529, -0.249067), max: (0.748952, 0.33403, -0.107029)
+
+
+[get_pcd_bbox] len(pts)=240 len(cls)=240
+[get_pcd_bbox] pcd=PointCloud with 240 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.98751, -1.47716, -0.873467), max: (2.18855, -1.3071, -0.756203)
+
+
+[get_pcd_bbox] len(pts)=248 len(cls)=248
+[get_pcd_bbox] pcd=PointCloud with 248 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.13168, 0.493205, -0.934724), max: (2.17666, 0.558059, -0.867879)
+
+
+[get_pcd_bbox] len(pts)=76 len(cls)=76
+[get_pcd_bbox] pcd=PointCloud with 76 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.84388, -0.0891524, -0.878219), max: (2.93306, -0.028554, -0.858413)
+
+
+[get_pcd_bbox] len(pts)=228 len(cls)=228
+[get_pcd_bbox] pcd=PointCloud with 228 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.606, -1.22491, -0.862234), max: (2.66588, -1.16419, -0.767826)
+
+
+[get_pcd_bbox] len(pts)=1040 len(cls)=1040
+[get_pcd_bbox] pcd=PointCloud with 1040 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.71119, -0.901623, -0.898876), max: (2.96878, -0.638848, -0.847703)
+
+
+[get_pcd_bbox] len(pts)=1604 len(cls)=1604
+[get_pcd_bbox] pcd=PointCloud with 1604 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.85459, 0.4962, -0.934724), max: (2.25683, 0.825932, -0.619991)
+
+
+[get_pcd_bbox] len(pts)=1344 len(cls)=1344
+[get_pcd_bbox] pcd=PointCloud with 1344 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.77648, 0.715966, -0.930793), max: (2.06939, 0.855648, -0.731714)
+
+
+[get_pcd_bbox] len(pts)=731 len(cls)=731
+[get_pcd_bbox] pcd=PointCloud with 731 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.36988, -1.23041, -0.900328), max: (2.58771, -0.927221, -0.807495)
+
+
+[get_pcd_bbox] len(pts)=548 len(cls)=548
+[get_pcd_bbox] pcd=PointCloud with 548 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.765308, -0.145601, -0.224448), max: (0.792677, -0.0818811, -0.161446)
+
+
+[get_pcd_bbox] len(pts)=138 len(cls)=138
+[get_pcd_bbox] pcd=PointCloud with 138 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.72547, -0.40197, -0.76764), max: (1.91876, -0.30846, -0.559753)
+
+
+[get_pcd_bbox] len(pts)=41 len(cls)=41
+[get_pcd_bbox] pcd=PointCloud with 41 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.84677, -0.0834265, -0.878208), max: (2.90336, -0.0332111, -0.859044)
+
+
+[get_pcd_bbox] len(pts)=1002 len(cls)=1002
+[get_pcd_bbox] pcd=PointCloud with 1002 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.57081, -1.3102, -0.930454), max: (1.65308, -1.05245, -0.833986)
+
+
+[get_pcd_bbox] len(pts)=7265 len(cls)=7265
+[get_pcd_bbox] pcd=PointCloud with 7265 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.633596, 0.244297, -0.24591), max: (0.824569, 0.486953, -0.128225)
+
+
+[get_pcd_bbox] len(pts)=845 len(cls)=845
+[get_pcd_bbox] pcd=PointCloud with 845 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.71962, -0.6479, -0.89134), max: (3.04801, -0.303721, -0.311622)
+
+
+[get_pcd_bbox] len(pts)=240 len(cls)=240
+[get_pcd_bbox] pcd=PointCloud with 240 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.86985, -0.412269, -0.878197), max: (2.98035, -0.291863, -0.821377)
+
+
+[get_pcd_bbox] len(pts)=126 len(cls)=126
+[get_pcd_bbox] pcd=PointCloud with 126 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.96569, -1.04739, -0.884225), max: (2.05757, -1.00095, -0.844358)
+
+
+[get_pcd_bbox] len(pts)=910 len(cls)=910
+[get_pcd_bbox] pcd=PointCloud with 910 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.665858, 0.273133, -0.20064), max: (0.748952, 0.325261, -0.107029)
+
+
+[get_pcd_bbox] len(pts)=839 len(cls)=839
+[get_pcd_bbox] pcd=PointCloud with 839 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.62138, -1.03842, -0.947758), max: (2.01244, -0.534562, -0.188439)
+
+
+[get_pcd_bbox] len(pts)=329 len(cls)=329
+[get_pcd_bbox] pcd=PointCloud with 329 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.26222, -1.63055, -0.863249), max: (2.36041, -1.54841, -0.758985)
+
+
+[get_pcd_bbox] len(pts)=626 len(cls)=626
+[get_pcd_bbox] pcd=PointCloud with 626 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.653471, 0.26584, -0.228218), max: (0.705085, 0.290773, -0.133043)
+
+
+[get_pcd_bbox] len(pts)=257 len(cls)=257
+[get_pcd_bbox] pcd=PointCloud with 257 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.05986, -1.13963, -0.899783), max: (2.17719, -1.05649, -0.857396)
+
+
+[get_pcd_bbox] len(pts)=398 len(cls)=398
+[get_pcd_bbox] pcd=PointCloud with 398 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.650905, 0.268557, -0.181149), max: (0.68333, 0.328355, -0.133685)
+
+
+[get_pcd_bbox] len(pts)=137 len(cls)=137
+[get_pcd_bbox] pcd=PointCloud with 137 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.66403, -1.06958, -0.859742), max: (1.71537, -1.02089, -0.836385)
+
+
+[get_pcd_bbox] len(pts)=295 len(cls)=295
+[get_pcd_bbox] pcd=PointCloud with 295 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.72494, -1.17805, -0.835774), max: (1.8759, -1.12325, -0.797874)
+
+
+[get_pcd_bbox] len(pts)=144 len(cls)=144
+[get_pcd_bbox] pcd=PointCloud with 144 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.22023, -0.822794, -0.929837), max: (2.45048, -0.666118, -0.893075)
+
+
+[get_pcd_bbox] len(pts)=623 len(cls)=623
+[get_pcd_bbox] pcd=PointCloud with 623 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.02296, -1.06244, -0.915234), max: (2.19592, -0.910827, -0.864192)
+
+
+[get_pcd_bbox] len(pts)=72 len(cls)=72
+[get_pcd_bbox] pcd=PointCloud with 72 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.7912, -0.271243, -0.94909), max: (2.11749, 0.225163, -0.915715)
+
+
+[get_pcd_bbox] len(pts)=429 len(cls)=429
+[get_pcd_bbox] pcd=PointCloud with 429 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.60558, -1.32535, -0.88922), max: (1.64474, -1.23811, -0.790988)
+
+
+[get_pcd_bbox] len(pts)=335 len(cls)=335
+[get_pcd_bbox] pcd=PointCloud with 335 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.52545, -1.05073, -0.947758), max: (1.81416, -0.754088, -0.888969)
+
+
+[get_pcd_bbox] len(pts)=289 len(cls)=289
+[get_pcd_bbox] pcd=PointCloud with 289 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.86985, -0.417106, -0.878208), max: (2.98492, -0.28714, -0.821365)
+
+
+[get_pcd_bbox] len(pts)=263 len(cls)=263
+[get_pcd_bbox] pcd=PointCloud with 263 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.3499, -1.13496, -0.810946), max: (2.77241, -0.939272, -0.478932)
+
+
+[get_pcd_bbox] len(pts)=2261 len(cls)=2261
+[get_pcd_bbox] pcd=PointCloud with 2261 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.11075, -1.30306, -0.604777), max: (2.38246, -1.05175, -0.38525)
+
+
+[get_pcd_bbox] len(pts)=14264 len(cls)=14264
+[get_pcd_bbox] pcd=PointCloud with 14264 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.75003, 0.495468, -0.932209), max: (2.61745, 0.85369, -0.277585)
+
+
+[get_pcd_bbox] len(pts)=11160 len(cls)=11160
+[get_pcd_bbox] pcd=PointCloud with 11160 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.52161, -1.41932, -0.945035), max: (2.03154, -0.787848, -0.661809)
+
+
+[get_pcd_bbox] len(pts)=8943 len(cls)=8943
+[get_pcd_bbox] pcd=PointCloud with 8943 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.98989, -1.53393, -0.900328), max: (2.66588, -0.930597, -0.377679)
+
+
+[get_pcd_bbox] len(pts)=315 len(cls)=315
+[get_pcd_bbox] pcd=PointCloud with 315 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.30849, -1.09901, -0.68317), max: (2.56998, -0.939272, -0.474881)
+
+
+[get_pcd_bbox] len(pts)=1409 len(cls)=1409
+[get_pcd_bbox] pcd=PointCloud with 1409 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.71825, -0.714632, -0.92791), max: (3.04801, -0.301854, -0.311622)
+
+
+[get_pcd_bbox] len(pts)=655 len(cls)=655
+[get_pcd_bbox] pcd=PointCloud with 655 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.02536, -0.718788, -0.92792), max: (2.22489, -0.543758, -0.853487)
+
+
+[get_pcd_bbox] len(pts)=291 len(cls)=291
+[get_pcd_bbox] pcd=PointCloud with 291 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.565064, -0.17647, -0.249067), max: (0.587293, -0.107123, -0.227965)
+
+
+[get_pcd_bbox] len(pts)=23266 len(cls)=23266
+[get_pcd_bbox] pcd=PointCloud with 10163 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.603718, 0.30194, -0.411128), max: (2.77471, 1.03117, -0.0726262)
+
+
+[get_pcd_bbox] len(pts)=5626 len(cls)=5626
+[get_pcd_bbox] pcd=PointCloud with 4168 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.701674, -0.0742824, -0.211121), max: (0.774712, -0.0433991, -0.0841564)
+
+
+[get_pcd_bbox] len(pts)=4649 len(cls)=4649
+[get_pcd_bbox] pcd=PointCloud with 4647 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.71938, -1.18836, -0.26286), max: (2.79602, -0.0477693, 0.20272)
+
+
+[get_pcd_bbox] len(pts)=841 len(cls)=841
+[get_pcd_bbox] pcd=PointCloud with 596 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.706988, -1.02781, -0.187438), max: (2.14444, -0.0493507, -0.0829832)
+
+
+[get_pcd_bbox] len(pts)=448 len(cls)=448
+[get_pcd_bbox] pcd=PointCloud with 351 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.708116, -0.0591859, -0.197113), max: (0.729216, -0.0496776, -0.177889)
+
+
+[get_pcd_bbox] len(pts)=3452 len(cls)=3452
+[get_pcd_bbox] pcd=PointCloud with 1501 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.603682, 0.303205, -0.369981), max: (1.92083, 0.75422, -0.0977284)
+
+
+[get_pcd_bbox] len(pts)=1750 len(cls)=1750
+[get_pcd_bbox] pcd=PointCloud with 1312 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.701732, -0.0667504, -0.161945), max: (0.739501, -0.0469505, -0.103295)
+
+
+[get_pcd_bbox] len(pts)=360 len(cls)=360
+[get_pcd_bbox] pcd=PointCloud with 158 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.600691, 0.304349, -0.220045), max: (0.62011, 0.393466, -0.207233)
+
+
+[get_pcd_bbox] len(pts)=197 len(cls)=197
+[get_pcd_bbox] pcd=PointCloud with 150 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.702308, -0.0732419, -0.201731), max: (0.705504, -0.0665766, -0.173835)
+
+
+[get_pcd_bbox] len(pts)=418 len(cls)=418
+[get_pcd_bbox] pcd=PointCloud with 315 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.701732, -0.0657089, -0.129077), max: (0.717, -0.057937, -0.105538)
+
+
+[get_pcd_bbox] len(pts)=53 len(cls)=53
+[get_pcd_bbox] pcd=PointCloud with 53 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.75733, -0.46581, 0.00664634), max: (1.79541, -0.4088, 0.0374666)
+
+
+[get_pcd_bbox] len(pts)=1785 len(cls)=1785
+[get_pcd_bbox] pcd=PointCloud with 748 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.608766, 0.318631, -0.169375), max: (0.620567, 0.358502, -0.142776)
+
+
+[get_pcd_bbox] len(pts)=392 len(cls)=392
+[get_pcd_bbox] pcd=PointCloud with 134 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.506076, 0.0652828, -0.224894), max: (0.523368, 0.0733534, -0.216293)
+
+
+[get_pcd_bbox] len(pts)=409 len(cls)=409
+[get_pcd_bbox] pcd=PointCloud with 202 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.600691, 0.304349, -0.220045), max: (2.54683, 0.916517, 0.194771)
+
+
+[get_pcd_bbox] len(pts)=879 len(cls)=879
+[get_pcd_bbox] pcd=PointCloud with 419 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.616324, 0.31176, -0.203632), max: (0.633375, 0.370744, -0.190344)
+
+
+[get_pcd_bbox] len(pts)=515 len(cls)=515
+[get_pcd_bbox] pcd=PointCloud with 385 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.697766, -0.0742038, -0.21192), max: (0.740046, -0.0384829, -0.201205)
+
+
+[get_pcd_bbox] len(pts)=436 len(cls)=436
+[get_pcd_bbox] pcd=PointCloud with 184 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.609065, 0.33275, -0.161969), max: (0.612832, 0.347858, -0.149084)
+
+
+[get_pcd_bbox] len(pts)=233 len(cls)=233
+[get_pcd_bbox] pcd=PointCloud with 233 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.70643, -0.46581, 0.00664634), max: (1.79541, -0.383883, 0.0397156)
+
+
+[get_pcd_bbox] len(pts)=277 len(cls)=277
+[get_pcd_bbox] pcd=PointCloud with 142 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.610321, 0.318594, -0.164117), max: (0.616986, 0.328231, -0.142776)
+
+
+[get_pcd_bbox] len(pts)=3738 len(cls)=3738
+[get_pcd_bbox] pcd=PointCloud with 1672 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.604379, 0.303503, -0.294507), max: (2.77471, 1.0184, -0.0722373)
+
+
+[get_pcd_bbox] len(pts)=501 len(cls)=501
+[get_pcd_bbox] pcd=PointCloud with 216 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.604594, 0.337555, -0.13533), max: (0.611052, 0.348308, -0.105367)
+
+
+[get_pcd_bbox] len(pts)=96 len(cls)=96
+[get_pcd_bbox] pcd=PointCloud with 84 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.730813, -0.0522509, -0.19955), max: (0.749184, -0.0454816, -0.179508)
+
+
+[get_pcd_bbox] len(pts)=1922 len(cls)=1922
+[get_pcd_bbox] pcd=PointCloud with 1922 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.70674, -1.01772, -0.285953), max: (2.60048, -0.375209, 0.0374666)
+
+
+[get_pcd_bbox] len(pts)=363 len(cls)=363
+[get_pcd_bbox] pcd=PointCloud with 186 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.615833, 0.323845, -0.191493), max: (0.624539, 0.352118, -0.184911)
+
+
+[get_pcd_bbox] len(pts)=1114 len(cls)=1114
+[get_pcd_bbox] pcd=PointCloud with 1114 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.44597, 0.736947, 0.0286945), max: (3.53618, 0.963016, 0.292868)
+
+
+[get_pcd_bbox] len(pts)=5633 len(cls)=5633
+[get_pcd_bbox] pcd=PointCloud with 5278 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.506044, -1.13909, -0.418879), max: (2.56677, 0.0731041, 0.20272)
+
+
+[get_pcd_bbox] len(pts)=46 len(cls)=46
+[get_pcd_bbox] pcd=PointCloud with 46 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.36787, -1.03112, 0.142947), max: (2.42343, -0.993677, 0.161439)
+
+
+[get_pcd_bbox] len(pts)=3217 len(cls)=3217
+[get_pcd_bbox] pcd=PointCloud with 3217 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.29718, 0.730378, -0.160758), max: (2.54683, 0.921954, 0.203551)
+
+
+[get_pcd_bbox] len(pts)=889 len(cls)=889
+[get_pcd_bbox] pcd=PointCloud with 889 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.34059, -1.3789, -0.65216), max: (3.05069, -0.9702, -0.243656)
+len(VP.track_strings)=2 Update Status:
+   head: OK (successfully updated)
+   left_hand: OK (successfully updated)
+
+len(VP.track_strings)=2 Update Status:
+   head: FAILED (too close to previous update)
+   left_hand: FAILED (too close to previous update)
+
+len(VP.track_strings)=2 Update Status:
+   head: FAILED (too close to previous update)
+   left_hand: FAILED (too close to previous update)
+
+len(VP.track_strings)=2 Update Status:
+   head: FAILED (too close to previous update)
+   left_hand: FAILED (too close to previous update)
+
+len(VP.track_strings)=2 Update Status:
+   head: FAILED (too close to previous update)
+   left_hand: FAILED (too close to previous update)
+
+len(VP.track_strings)=2 Update Status:
+   head: FAILED (too close to previous update)
+   left_hand: FAILED (too close to previous update)
+
+len(VP.track_strings)=2 Update Status:
+   head: FAILED (too close to previous update)
+   left_hand: FAILED (too close to previous update)
+
+
+
+[get_pcd_bbox] len(pts)=2089 len(cls)=2089
+[get_pcd_bbox] pcd=PointCloud with 2089 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.763672, -0.164011, -0.225088), max: (0.876197, -0.0856146, -0.100188)
+
+
+[get_pcd_bbox] len(pts)=2582 len(cls)=2582
+[get_pcd_bbox] pcd=PointCloud with 2582 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.653108, 0.264243, -0.228784), max: (0.749721, 0.333751, -0.105598)
+
+
+[get_pcd_bbox] len(pts)=1410 len(cls)=1410
+[get_pcd_bbox] pcd=PointCloud with 1410 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.16929, -1.66015, -0.890525), max: (2.41467, -1.47161, -0.653782)
+
+
+[get_pcd_bbox] len(pts)=100356 len(cls)=100356
+[get_pcd_bbox] pcd=PointCloud with 100356 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.519946, -0.96116, -0.997506), max: (1.56468, 0.482468, -0.124823)
+
+
+[get_pcd_bbox] len(pts)=182 len(cls)=182
+[get_pcd_bbox] pcd=PointCloud with 182 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.667609, 0.285722, -0.122592), max: (0.683188, 0.311107, -0.114432)
+
+
+[get_pcd_bbox] len(pts)=638 len(cls)=638
+[get_pcd_bbox] pcd=PointCloud with 638 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.14159, -1.55419, -0.866896), max: (2.49383, -1.2658, -0.521732)
+
+
+[get_pcd_bbox] len(pts)=1642 len(cls)=1642
+[get_pcd_bbox] pcd=PointCloud with 1642 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.80709, -0.913541, -0.903963), max: (2.97235, -0.320592, -0.186304)
+
+
+[get_pcd_bbox] len(pts)=201 len(cls)=201
+[get_pcd_bbox] pcd=PointCloud with 201 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.95875, -1.16339, -0.865829), max: (2.05044, -1.07506, -0.826268)
+
+
+[get_pcd_bbox] len(pts)=74 len(cls)=74
+[get_pcd_bbox] pcd=PointCloud with 74 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.82742, -0.0949352, -0.899493), max: (2.97256, -0.0330607, -0.843971)
+
+
+[get_pcd_bbox] len(pts)=288 len(cls)=288
+[get_pcd_bbox] pcd=PointCloud with 288 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.763672, -0.154578, -0.207909), max: (0.799586, -0.109254, -0.124417)
+
+
+[get_pcd_bbox] len(pts)=244 len(cls)=244
+[get_pcd_bbox] pcd=PointCloud with 244 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.12795, 0.489328, -0.928593), max: (2.20433, 0.550582, -0.877593)
+
+
+[get_pcd_bbox] len(pts)=234 len(cls)=234
+[get_pcd_bbox] pcd=PointCloud with 234 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.52533, -1.23528, -0.862829), max: (2.66662, -1.14491, -0.699956)
+
+
+[get_pcd_bbox] len(pts)=22 len(cls)=22
+[get_pcd_bbox] pcd=PointCloud with 22 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.82742, -0.0739616, -0.907607), max: (2.98988, -0.0376957, -0.843971)
+
+
+[get_pcd_bbox] len(pts)=1556 len(cls)=1556
+[get_pcd_bbox] pcd=PointCloud with 1556 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.93833, 0.492768, -0.936792), max: (2.28813, 0.840682, -0.608039)
+
+
+[get_pcd_bbox] len(pts)=217 len(cls)=217
+[get_pcd_bbox] pcd=PointCloud with 217 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.00254, -1.47655, -0.868278), max: (2.18214, -1.31602, -0.768445)
+
+
+[get_pcd_bbox] len(pts)=965 len(cls)=965
+[get_pcd_bbox] pcd=PointCloud with 965 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.58067, -1.32866, -0.93304), max: (1.67221, -1.05599, -0.789736)
+
+
+[get_pcd_bbox] len(pts)=36 len(cls)=36
+[get_pcd_bbox] pcd=PointCloud with 36 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.568352, -0.173932, -0.248047), max: (0.588572, -0.111389, -0.230187)
+
+
+[get_pcd_bbox] len(pts)=197 len(cls)=197
+[get_pcd_bbox] pcd=PointCloud with 197 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.2795, -1.64867, -0.861599), max: (2.34561, -1.57497, -0.774985)
+
+
+[get_pcd_bbox] len(pts)=135 len(cls)=135
+[get_pcd_bbox] pcd=PointCloud with 135 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.73162, -0.405749, -0.767554), max: (1.92038, -0.312356, -0.563599)
+
+
+[get_pcd_bbox] len(pts)=182 len(cls)=182
+[get_pcd_bbox] pcd=PointCloud with 182 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.8853, -0.417103, -0.900785), max: (3.01944, -0.30418, -0.857745)
+
+
+[get_pcd_bbox] len(pts)=119 len(cls)=119
+[get_pcd_bbox] pcd=PointCloud with 119 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.97363, -1.05117, -0.884799), max: (2.05851, -1.00515, -0.850164)
+
+
+[get_pcd_bbox] len(pts)=251 len(cls)=251
+[get_pcd_bbox] pcd=PointCloud with 251 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.06805, -1.13679, -0.900392), max: (2.17158, -1.05643, -0.863654)
+
+
+[get_pcd_bbox] len(pts)=717 len(cls)=717
+[get_pcd_bbox] pcd=PointCloud with 717 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.668908, 0.268281, -0.197324), max: (0.749721, 0.31386, -0.105598)
+
+
+[get_pcd_bbox] len(pts)=474 len(cls)=474
+[get_pcd_bbox] pcd=PointCloud with 474 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.654223, 0.264243, -0.182618), max: (0.687017, 0.324607, -0.12631)
+
+
+[get_pcd_bbox] len(pts)=194 len(cls)=194
+[get_pcd_bbox] pcd=PointCloud with 194 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.82811, -0.417103, -0.900785), max: (3.01834, -0.0423307, -0.843971)
+
+
+[get_pcd_bbox] len(pts)=222 len(cls)=222
+[get_pcd_bbox] pcd=PointCloud with 222 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.769743, -0.113675, -0.218721), max: (0.793964, -0.0867157, -0.165211)
+
+
+[get_pcd_bbox] len(pts)=4083 len(cls)=4083
+[get_pcd_bbox] pcd=PointCloud with 4083 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.649586, 0.322573, -0.243342), max: (0.77674, 0.482468, -0.125743)
+
+
+[get_pcd_bbox] len(pts)=330 len(cls)=330
+[get_pcd_bbox] pcd=PointCloud with 330 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.59622, -1.32866, -0.879296), max: (1.64997, -1.24811, -0.791982)
+
+
+[get_pcd_bbox] len(pts)=152 len(cls)=152
+[get_pcd_bbox] pcd=PointCloud with 152 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.65818, -1.0686, -0.855415), max: (1.70586, -1.01784, -0.825849)
+
+
+[get_pcd_bbox] len(pts)=202 len(cls)=202
+[get_pcd_bbox] pcd=PointCloud with 202 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.82456, -0.0964967, -0.9223), max: (3.06241, 0.184978, -0.843971)
+
+
+[get_pcd_bbox] len(pts)=684 len(cls)=684
+[get_pcd_bbox] pcd=PointCloud with 684 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.653947, 0.260731, -0.228756), max: (0.705918, 0.291393, -0.131629)
+
+
+[get_pcd_bbox] len(pts)=446 len(cls)=446
+[get_pcd_bbox] pcd=PointCloud with 446 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.70506, -0.923587, -0.889285), max: (2.87269, -0.791572, -0.859177)
+
+
+[get_pcd_bbox] len(pts)=180 len(cls)=180
+[get_pcd_bbox] pcd=PointCloud with 180 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.73126, -1.16635, -0.823756), max: (1.8337, -1.12224, -0.796312)
+
+
+[get_pcd_bbox] len(pts)=403 len(cls)=403
+[get_pcd_bbox] pcd=PointCloud with 403 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.59262, -1.09277, -0.915142), max: (1.66664, -0.996354, -0.846279)
+
+
+[get_pcd_bbox] len(pts)=630 len(cls)=630
+[get_pcd_bbox] pcd=PointCloud with 630 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.02334, -1.07059, -0.934223), max: (2.18671, -0.922137, -0.864765)
+
+
+[get_pcd_bbox] len(pts)=445 len(cls)=445
+[get_pcd_bbox] pcd=PointCloud with 445 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.73811, -0.629302, -0.891006), max: (2.94422, -0.331549, -0.136211)
+
+
+[get_pcd_bbox] len(pts)=154 len(cls)=154
+[get_pcd_bbox] pcd=PointCloud with 154 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.22943, -0.853303, -0.927557), max: (2.47452, -0.673066, -0.900188)
+
+
+[get_pcd_bbox] len(pts)=63 len(cls)=63
+[get_pcd_bbox] pcd=PointCloud with 63 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.766543, -0.154335, -0.166427), max: (0.799586, -0.119402, -0.123391)
+
+
+[get_pcd_bbox] len(pts)=401 len(cls)=401
+[get_pcd_bbox] pcd=PointCloud with 401 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.52323, -1.06095, -0.96431), max: (1.83604, -0.7545, -0.889604)
+
+
+[get_pcd_bbox] len(pts)=32 len(cls)=32
+[get_pcd_bbox] pcd=PointCloud with 32 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.56462, -0.206553, -0.922355), max: (2.59882, -0.176922, -0.900288)
+
+
+[get_pcd_bbox] len(pts)=69 len(cls)=69
+[get_pcd_bbox] pcd=PointCloud with 69 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.09348, -0.456653, -0.844397), max: (2.53432, -0.373468, -0.532522)
+
+
+[get_pcd_bbox] len(pts)=261 len(cls)=261
+[get_pcd_bbox] pcd=PointCloud with 261 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.38362, -1.1343, -0.818381), max: (2.78467, -0.958722, -0.497838)
+
+
+[get_pcd_bbox] len(pts)=10674 len(cls)=10674
+[get_pcd_bbox] pcd=PointCloud with 10674 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.52039, -1.4386, -0.960851), max: (2.04619, -0.800399, -0.68243)
+
+
+[get_pcd_bbox] len(pts)=14347 len(cls)=14347
+[get_pcd_bbox] pcd=PointCloud with 14347 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.74871, 0.492768, -0.936749), max: (2.65146, 0.956222, -0.318276)
+
+
+[get_pcd_bbox] len(pts)=2034 len(cls)=2034
+[get_pcd_bbox] pcd=PointCloud with 2034 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.08811, -1.27685, -0.592514), max: (2.3672, -1.05151, -0.371165)
+
+
+[get_pcd_bbox] len(pts)=8960 len(cls)=8960
+[get_pcd_bbox] pcd=PointCloud with 8960 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.00426, -1.5497, -0.911327), max: (2.66662, -0.938567, -0.371165)
+
+
+[get_pcd_bbox] len(pts)=413 len(cls)=413
+[get_pcd_bbox] pcd=PointCloud with 413 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.32497, -1.14643, -0.703502), max: (2.56117, -0.958722, -0.479694)
+
+
+[get_pcd_bbox] len(pts)=1645 len(cls)=1645
+[get_pcd_bbox] pcd=PointCloud with 1645 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.73162, -0.712518, -0.917339), max: (2.94422, -0.309197, -0.136211)
+
+
+[get_pcd_bbox] len(pts)=659 len(cls)=659
+[get_pcd_bbox] pcd=PointCloud with 659 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (2.04074, -0.716639, -0.917369), max: (2.23185, -0.546148, -0.853546)
+
+
+[get_pcd_bbox] len(pts)=285 len(cls)=285
+[get_pcd_bbox] pcd=PointCloud with 285 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.567392, -0.179743, -0.248047), max: (0.588343, -0.109846, -0.228847)
+
+
+[get_pcd_bbox] len(pts)=178 len(cls)=178
+[get_pcd_bbox] pcd=PointCloud with 178 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (0.633479, -1.05482, -1.00119), max: (1.00937, -0.537235, -0.194444)
+
+
+[get_pcd_bbox] len(pts)=692 len(cls)=692
+[get_pcd_bbox] pcd=PointCloud with 692 points.
+[get_pcd_bbox] bbox=AxisAlignedBoundingBox: min: (1.73162, -0.440503, -0.720967), max: (2.05633, -0.309197, -0.491695)
+Shutting down...
+[ros2run]: Process exited with failure 1
