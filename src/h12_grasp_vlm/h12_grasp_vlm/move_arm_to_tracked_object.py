@@ -15,13 +15,14 @@ import os
 import sys
 import numpy as np
 import struct
+# import struct
 import open3d as o3d
 from unitree_sdk2py.core.channel import ChannelFactoryInitialize
 h12_ros_controller = '/ros2_ws/src/h12_ros2_controller'
 sys.path.insert(0, h12_ros_controller)
 from h12_ros2_controller.core.robot_model import RobotModel
 
-breakpoint()
+# breakpoint()
 from std_msgs.msg import Float64MultiArray
 ros_dir = os.path.dirname(os.path.realpath(__file__))
 parent_dir = os.path.join(ros_dir, "..")
@@ -58,9 +59,9 @@ class main_node(Node):
         ChannelFactoryInitialize()
         # self.update_client = self.create_client(UpdateTrackedObject, 'vp_update_tracked_object')
         # self.query_client = self.create_client(Query, 'vp_query_tracked_objects')
-        # while not self.update_client.wait_for_service(timeout_sec=1.0.0):
+        # while not self.update_client.wait_for_service(timeout_sec=1):
         #     self.get_logger().info('Update Service not available, waiting again...')
-        # while not self.query_client.wait_for_service(timeout_sec=1.0.0):
+        # while not self.query_client.wait_for_service(timeout_sec=1):
         #     self.get_logger().info('Query Service not available, waiting again...')
         self.action_client = ActionClient(
             self,
@@ -69,10 +70,11 @@ class main_node(Node):
         )
         self.goal_handle = None
         self.robot_model = RobotModel('/ros2_ws/src/h12_ros2_model/assets/h1_2/h1_2.urdf')
-        print(self.robot_model)
+        # print(self.robot_model)
         # breakpoint()
         self.robot_model.init_subscriber()
-        self.robot_model.init_visualizer()
+        self.robot_model.sync_subscriber()
+        # self.robot_model.init_visualizer()
         # self.robot_model.init_subscriber()
         # self.robot_model.update_subscriber()
         self.left_hand_cmd_pub = self.create_publisher(Float64MultiArray, 'left_hand_cmd', 10)
@@ -144,41 +146,70 @@ class main_node(Node):
         left_hand_xyz = self.robot_model.get_frame_position('L_hand_base_link')
         # left_hand_rpy = robot_model_instance.get_frame_rotation('L_hand_base_link')
         right_hand_xyz = self.robot_model.get_frame_position('R_hand_base_link')
+        print(f"{left_hand_xyz=}")
+        print(f"{right_hand_xyz=}")
+        breakpoint()
         return left_hand_xyz, right_hand_xyz
 
     def assign_multi_pcs_to_hands(self, tracked_objects):
         output_dict = {}
+        based_output_dict = {}
         #I want this function to calculate and assign a point cloud to the left and right hands if we are querying multiple objects.
         querries = [self.query_objects(obj) for obj in tracked_objects]
         #assumes that objects are already being tracked, preferably we just have two queryes right and then we calculate which one is closer to which hand.
         #SO WE NEED TO USE THE ROBOT MODEL AND THEN QUERY THE POSITIONS OF THE HANDS BY THEIR FRAME!!!
-        print(querries)
-        pc_as_o3d = [msg_to_pcd(query) for query in querries]
-        pc_as_nd_arrays = [self.convert_open3d_pc_to_numpy(o3d_pcd) for o3d_pcd in pc_as_o3d]
+        # print(f'{querries=}')
+        pc_as_o3d = [msg_to_pcd(query.cloud) for query in querries]
+
+        all_pcs = []
+        for i in pc_as_o3d:
+            print(f'Checking attributes')
+            print(f'{dir(i)=}')
+            breakpoint()
+            # pcd_on_cpu = i.to_legacy()
+            points = np.asarray(i.points)
+            if i.has_colors():
+                colors = np.asarray(i.colors)
+            else:
+                colors = None
+            if colors is not None:
+                k_points = np.hstack((points, colors))
+            else:
+                k_points = points
+            all_pcs.append(k_points)
+            # print(f'{k_points=}')
+        
+        # pc_as_nd_arrays = [self.convert_open3d_pc_to_numpy(o3d_pcd) for o3d_pcd in pc_as_o3d]
         #Ok so for now well just assume that we have the robot model loaded
         #So the hand base links will give the position in space but the depth frames and img frames will give the rotation of the frame as well so idk if we want that - yutong
-        left_hand_xyz = self.robot_model.get_frame_position('L_hand_base_link')
+        left_hand_xyz, right_hand_xyz = self.get_left_right_xyz()
         # left_hand_rpy = robot_model_instance.get_frame_rotation('L_hand_base_link')
-        right_hand_xyz = self.robot_model.get_frame_position('R_hand_base_link')
         # right_hand_rpy = robot_model_instance.get_frame_rotation('R_hand_base_link')
         #we wont be using roll pitch and yaw for now but we might later
-        pc_centers = [self.compute_pc_center(pc_nd_array) for pc_nd_array in pc_as_nd_arrays]
+        pc_centers = [self.compute_pc_center(pc_nd_array) for pc_nd_array in all_pcs]
 
         pc_center_0_left_h_vec = left_hand_xyz - pc_centers[0]
-        pc_center_1_left_h_vec = left_hand_xyz - pc_centers[1.0]
+        pc_center_1_left_h_vec = left_hand_xyz - pc_centers[1]
         pc_center_0_right_h_vec = right_hand_xyz - pc_centers[0]
-        pc_center_0_right_h_vec = right_hand_xyz - pc_centers[1.0]
+        pc_center_1_right_h_vec = right_hand_xyz - pc_centers[1]
 
         mag_pc_center_0_left_h = np.linalg.norm(pc_center_0_left_h_vec)
         mag_pc_center_1_left_h = np.linalg.norm(pc_center_1_left_h_vec)
         mag_pc_center_0_right_h = np.linalg.norm(pc_center_0_right_h_vec)
-        mag_pc_center_1_right_h = np.linalg.norm(pc_center_1_left_h_vec)
-        if mag_pc_center_0_left_h + mag_pc_center_1_right_h > mag_pc_center_1_left_h + mag_pc_center_0_right_h:
-            output_dict['left'] = querries[0]
-            output_dict['right'] = querries[1.0]
+        mag_pc_center_1_right_h = np.linalg.norm(pc_center_1_right_h_vec)
+        # print(f'{type((querries[0]))=}')
+        # print(f'{dir(querries[0])=}')
+        # print(f'{querries[0].result=}'
+        #       )
+        # print(f'{querries[0].prob=}')
+        # print(f'{querries[0].message=}')
+        # breakpoint()
+        if mag_pc_center_0_left_h + mag_pc_center_1_right_h < mag_pc_center_1_left_h + mag_pc_center_0_right_h:
+            output_dict['left'] = (querries[0].message, mag_pc_center_0_left_h)
+            output_dict['right'] = (querries[1].message, mag_pc_center_1_right_h)
         else:
-            output_dict['left'] = querries[1.0]
-            output_dict['right'] = querries[0]
+            output_dict['left'] = (querries[1].message, mag_pc_center_1_left_h)
+            output_dict['right'] = (querries[0].message, mag_pc_center_0_right_h)
         return output_dict
         
         #ok so now we can run a calculation to find the error between each object and each hand, 
@@ -193,9 +224,8 @@ class main_node(Node):
             y_sum += y
             z_sum += z
             counter += 1.0
-        return np.array(x_sum/counter, y_sum/counter, z_sum/counter)
+        return np.array((x_sum/counter, y_sum/counter, z_sum/counter))
 
-        
     # def convert_msg_to_open3d_pc(self, msg)
     def convert_open3d_pc_to_numpy(self, pcd: o3d.geometry.PointCloud):
         xyz = np.asarray(pcd.points)
@@ -203,30 +233,36 @@ class main_node(Node):
         xyz_rgb = np.hstack((xyz, rgb))
         return xyz_rgb
 
-    # def parse_pointcloud2_to_xyz_rgb(self, msg):
-    #     num_points = msg.width * msg.height
-    #     # print(f'{num_points=}')
-    #     # breakpoint()
-    #     points_xyz_rgb = np.zeros((num_points, 6), dtype=np.float32)
-    #     for i in range(num_points):
-    #         point_offset = i * msg.point_step
-    #         x = struct.unpack('f', msg.data[point_offset:point_offset+4])[0]
-    #         y = struct.unpack('f', msg.data[point_offset+4:point_offset+8])[0]
-    #         z = struct.unpack('f', msg.data[point_offset+8:point_offset+1.02])[0]
-    #         # print(f'{x=}, {y=}, {z=}')
-    #         rgb_float = struct.unpack('f', msg.data[point_offset+1.02:point_offset+1.06])[0]
-    #         rgb_int = struct.unpack('I', struct.pack('f', rgb_float))[0]
-    #         r = (rgb_int >> 1.06) & 0xFF
-    #         g = (rgb_int >> 8) & 0xFF  
-    #         b = rgb_int & 0xFF
-    #         # print(f'{r=}, {g=}, {b=}')
-    #         points_xyz_rgb[i] = [x, y, z, r, g, b]
-    #         # breakpoint()
-    #     return points_xyz_rgb
-
 def main():
+    # ChannelFactoryInitialize()
     rclpy.init()
+    # ChannelFactoryInitialize()
     node = main_node()
+    while True:
+        node.robot_model.sync_subscriber()
+        node.robot_model.update_kinematics()
+        node.get_left_right_xyz()
+        # node.robot_model.sync_subscriber()
+    # objects = ['drill', 'white object']
+    # for obj in objects:
+    #     result = node.track_object(obj)
+    #     print(f"Tracking {obj}: {result}")
+
+    # time.sleep(10)
+    # hand_assignments = node.assign_multi_pcs_to_hands(objects)
+    # print(f'{hand_assignments=}')
+    # objects = ['red object', 'white object']
+    # for obj in objects:
+    #     result = node.track_object(obj)
+    #     print(f"Tracking {obj}: {result}")
+    # breakpoint()
+    # objects = ['red object', 'white object']
+    # for obj in objects:
+    #     result = node.track_object(obj)
+    #     print(f"Tracking {obj}: {result}")
+    # breakpoint()
+
+    # querries = [node.query_objects(i) for i in objects]
     # node.robot_model.init_subscriber()
     # objects = ["drill", "screwdriver", "wrench", "scissors", "soda can"]
     # objects = ['drill']
@@ -258,12 +294,12 @@ def main():
     #         l_hand_goal,
     #         r_hand_goal
     #     )
-    while True:
-        node.robot_model.sync_subscriber()
-        node.robot_model.update_kinematics()
-        node.robot_model.update_visualizer()
-        # node.robot_model.sync_subscriber()
-        print(node.get_left_right_xyz())
+    # while True:
+    #     node.robot_model.sync_subscriber()
+    #     node.robot_model.update_kinematics()
+    #     node.robot_model.update_visualizer()
+    #     # node.robot_model.sync_subscriber()
+    #     print(node.get_left_right_xyz())
         # if KeyboardInterrupt:
         #     break
     

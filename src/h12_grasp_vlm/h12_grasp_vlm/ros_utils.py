@@ -12,6 +12,7 @@ from tf2_ros         import LookupException, ConnectivityException, Extrapolatio
 from rclpy.time import Time
 from rclpy.duration import Duration
 
+from rclpy.node import Node
 
 
 from math_utils import quat_to_euler
@@ -271,49 +272,63 @@ def transform_to_matrix(tf_msg):
     return T
 
 class TFHandler:
-    def __init__(self, node, cache_time: float = 120.0):
+    """
+    A reusable class to handle TF2 transformations.
+    """
+    def __init__(self, node: Node, cache_time: float = 120.0):
         """
-        node: any rclpy.node.Node (for logging)
-        cache_time: how many seconds of past transforms to buffer
+        Initializes the TF handler.
+        
+        Args:
+            node: The ROS 2 node to attach the listener to.
+            cache_time: How many seconds of past transforms to buffer.
         """
         self.node = node
         self._buffer = Buffer(cache_time=Duration(seconds=cache_time))
-        self._listener = TransformListener(self._buffer, node)
+        # The TransformListener should be spun. Setting spin_thread=True handles this automatically.
+        self._listener = TransformListener(self._buffer, node, spin_thread=True)
 
     def lookup_transform(
         self,
         target_frame: str,
         source_frame: str,
-        time_stamp,
+        time_stamp: Time,
         timeout_sec: float = 0.1
     ):
         """
-        Return a geometry_msgs.msg.Transform or None.
-        time_stamp may be rclpy.time.Time or builtin_interfaces.msg.Time.
+        Looks up the transform between two coordinate frames.
+
+        Args:
+            target_frame: The frame to transform into.
+            source_frame: The frame to transform from.
+            time_stamp: The time at which to get the transform. Use rclpy.time.Time() for latest.
+            timeout_sec: How long to wait for the transform to become available.
+
+        Returns:
+            A geometry_msgs.msg.Transform object or None if the lookup fails.
         """
-        # normalize stamp to rclpy Time
+        # Normalize stamp to rclpy.time.Time if it's from a message header
         stamp = time_stamp if isinstance(time_stamp, Time) else Time.from_msg(time_stamp)
-
-        if not self._buffer.can_transform(
-            target_frame, source_frame, stamp, Duration(seconds=timeout_sec)
-        ):
-            self.node.get_logger().debug(
-                f"TF unavailable: {source_frame} → {target_frame} @ {stamp}"
-            )
-            return None
-
+        
         try:
-            xf = self._buffer.lookup_transform(
-                target_frame,
-                source_frame,
-                stamp,
-                timeout=Duration(seconds=timeout_sec)
-            )
+            # Check if the transform is possible
+            if not self._buffer.can_transform(
+                target_frame, source_frame, stamp, timeout=Duration(seconds=timeout_sec)
+            ):
+                self.node.get_logger().info(
+                    f"TF unavailable: Cannot transform from '{source_frame}' to '{target_frame}'",
+                    throttle_duration_sec=2.0
+                )
+                return None
+            
+            # Perform the lookup
+            xf = self._buffer.lookup_transform(target_frame, source_frame, stamp)
             return xf.transform
 
         except (LookupException, ConnectivityException, ExtrapolationException) as e:
-            self.node.get_logger().debug(
-                f"TF lookup failed {source_frame}→{target_frame}: {e}"
+            self.node.get_logger().info(
+                f"TF lookup failed from '{source_frame}' to '{target_frame}': {e}",
+                throttle_duration_sec=2.0
             )
             return None
 
@@ -321,10 +336,18 @@ class TFHandler:
         self,
         target_frame: str,
         source_frame: str,
-        time_stamp,
+        time_stamp: Time,
     ) -> list[float] | None:
         """
-        Return [x, y, z, roll, pitch, yaw] in target_frame, or None.
+        Looks up the pose of a source frame relative to a target frame.
+
+        Args:
+            target_frame: The reference frame.
+            source_frame: The frame whose pose is being requested.
+            time_stamp: The time of the request. Use rclpy.time.Time() for the latest pose.
+
+        Returns:
+            A list [x, y, z, roll, pitch, yaw] in the target_frame, or None on failure.
         """
         tf = self.lookup_transform(target_frame, source_frame, time_stamp)
         if tf is None:
@@ -332,5 +355,8 @@ class TFHandler:
 
         t = tf.translation
         q = tf.rotation
+        
+        # Convert the quaternion to Euler angles
         roll, pitch, yaw = quat_to_euler(q.x, q.y, q.z, q.w)
+        
         return [t.x, t.y, t.z, roll, pitch, yaw]

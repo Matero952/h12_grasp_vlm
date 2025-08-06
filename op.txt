@@ -1,0 +1,11 @@
+Tracking red object: custom_ros_messages.srv.UpdateTrackedObject_Response(result=True, message='Added track string: red object')
+Tracking white object: custom_ros_messages.srv.UpdateTrackedObject_Response(result=True, message='Added track string: white object')
+Tracking red object: custom_ros_messages.srv.UpdateTrackedObject_Response(result=False, message='Failed to add track string: red object')
+Tracking white object: custom_ros_messages.srv.UpdateTrackedObject_Response(result=False, message='Failed to add track string: white object')
+> /ros2_ws/build/h12_grasp_vlm/h12_grasp_vlm/move_arm_to_tracked_object.py(267)main()
+-> objects = ['red object', 'white object']
+(Pdb) Tracking red object: custom_ros_messages.srv.UpdateTrackedObject_Response(result=False, message='Failed to add track string: red object')
+Tracking white object: custom_ros_messages.srv.UpdateTrackedObject_Response(result=False, message='Failed to add track string: white object')
+> /ros2_ws/build/h12_grasp_vlm/h12_grasp_vlm/move_arm_to_tracked_object.py(371)main()
+-> node.destroy_node()
+(Pdb) 
