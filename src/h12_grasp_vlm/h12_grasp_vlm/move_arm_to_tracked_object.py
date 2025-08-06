@@ -57,12 +57,12 @@ class main_node(Node):
     def __init__(self):
         super().__init__('coordinator')
         ChannelFactoryInitialize()
-        # self.update_client = self.create_client(UpdateTrackedObject, 'vp_update_tracked_object')
-        # self.query_client = self.create_client(Query, 'vp_query_tracked_objects')
-        # while not self.update_client.wait_for_service(timeout_sec=1):
-        #     self.get_logger().info('Update Service not available, waiting again...')
-        # while not self.query_client.wait_for_service(timeout_sec=1):
-        #     self.get_logger().info('Query Service not available, waiting again...')
+        self.update_client = self.create_client(UpdateTrackedObject, 'vp_update_tracked_object')
+        self.query_client = self.create_client(Query, 'vp_query_tracked_objects')
+        while not self.update_client.wait_for_service(timeout_sec=1):
+            self.get_logger().info('Update Service not available, waiting again...')
+        while not self.query_client.wait_for_service(timeout_sec=1):
+            self.get_logger().info('Query Service not available, waiting again...')
         self.action_client = ActionClient(
             self,
             DualArm,
@@ -74,7 +74,8 @@ class main_node(Node):
         # breakpoint()
         self.robot_model.init_subscriber()
         self.robot_model.sync_subscriber()
-        # self.robot_model.init_visualizer()
+        self.robot_model.update_kinematics()
+        self.robot_model.init_visualizer()
         # self.robot_model.init_subscriber()
         # self.robot_model.update_subscriber()
         self.left_hand_cmd_pub = self.create_publisher(Float64MultiArray, 'left_hand_cmd', 10)
@@ -143,12 +144,15 @@ class main_node(Node):
         self.get_logger().info(f"Published hand cmds: left={left_hand}, right={right_hand}")
 
     def get_left_right_xyz(self):
+        # self.robot_model.sync_subscriber()
+        self.robot_model.update_kinematics()
+        # self.robot_model.udate_kinematics()
         left_hand_xyz = self.robot_model.get_frame_position('L_hand_base_link')
         # left_hand_rpy = robot_model_instance.get_frame_rotation('L_hand_base_link')
         right_hand_xyz = self.robot_model.get_frame_position('R_hand_base_link')
         print(f"{left_hand_xyz=}")
         print(f"{right_hand_xyz=}")
-        breakpoint()
+        # breakpoint()
         return left_hand_xyz, right_hand_xyz
 
     def assign_multi_pcs_to_hands(self, tracked_objects):
@@ -178,14 +182,9 @@ class main_node(Node):
                 k_points = points
             all_pcs.append(k_points)
             # print(f'{k_points=}')
-        
-        # pc_as_nd_arrays = [self.convert_open3d_pc_to_numpy(o3d_pcd) for o3d_pcd in pc_as_o3d]
         #Ok so for now well just assume that we have the robot model loaded
         #So the hand base links will give the position in space but the depth frames and img frames will give the rotation of the frame as well so idk if we want that - yutong
         left_hand_xyz, right_hand_xyz = self.get_left_right_xyz()
-        # left_hand_rpy = robot_model_instance.get_frame_rotation('L_hand_base_link')
-        # right_hand_rpy = robot_model_instance.get_frame_rotation('R_hand_base_link')
-        #we wont be using roll pitch and yaw for now but we might later
         pc_centers = [self.compute_pc_center(pc_nd_array) for pc_nd_array in all_pcs]
 
         pc_center_0_left_h_vec = left_hand_xyz - pc_centers[0]
@@ -197,23 +196,13 @@ class main_node(Node):
         mag_pc_center_1_left_h = np.linalg.norm(pc_center_1_left_h_vec)
         mag_pc_center_0_right_h = np.linalg.norm(pc_center_0_right_h_vec)
         mag_pc_center_1_right_h = np.linalg.norm(pc_center_1_right_h_vec)
-        # print(f'{type((querries[0]))=}')
-        # print(f'{dir(querries[0])=}')
-        # print(f'{querries[0].result=}'
-        #       )
-        # print(f'{querries[0].prob=}')
-        # print(f'{querries[0].message=}')
-        # breakpoint()
         if mag_pc_center_0_left_h + mag_pc_center_1_right_h < mag_pc_center_1_left_h + mag_pc_center_0_right_h:
-            output_dict['left'] = (querries[0].message, mag_pc_center_0_left_h)
-            output_dict['right'] = (querries[1].message, mag_pc_center_1_right_h)
+            output_dict['left'] = (querries[0].message, mag_pc_center_0_left_h, self.compute_pc_center(all_pcs[0]))
+            output_dict['right'] = (querries[1].message, mag_pc_center_1_right_h, self.compute_pc_center(all_pcs[1]))
         else:
-            output_dict['left'] = (querries[1].message, mag_pc_center_1_left_h)
-            output_dict['right'] = (querries[0].message, mag_pc_center_0_right_h)
+            output_dict['left'] = (querries[1].message, mag_pc_center_1_left_h, self.compute_pc_center(all_pcs[1]))
+            output_dict['right'] = (querries[0].message, mag_pc_center_0_right_h, self.compute_pc_center(all_pcs[0]))
         return output_dict
-        
-        #ok so now we can run a calculation to find the error between each object and each hand, 
-        # but how do we know which part of the object we want?!
 
     def compute_pc_center(self, pc: np.ndarray):
         x_sum, y_sum, z_sum = 0, 0, 0
@@ -234,14 +223,45 @@ class main_node(Node):
         return xyz_rgb
 
 def main():
-    # ChannelFactoryInitialize()
     rclpy.init()
-    # ChannelFactoryInitialize()
     node = main_node()
-    while True:
-        node.robot_model.sync_subscriber()
-        node.robot_model.update_kinematics()
-        node.get_left_right_xyz()
+    objects = ['drill', 'screwdriver']
+    for obj in objects:
+        result = node.track_object(obj)
+        print(f"Tracking {obj}: {result}")
+    time.sleep(10)
+    node.robot_model.sync_subscriber()
+    node.robot_model.sync_subscriber()
+    node.robot_model.update_kinematics()
+    node.robot_model.update_visualizer()
+    hand_assignments = node.assign_multi_pcs_to_hands(objects)
+    _,_, L_pos = hand_assignments['left']
+    _,_, R_pos = hand_assignments['right']
+    print(f'{L_pos=}')
+    print(f'{R_pos=}')
+    vertical_offset = 0.2
+    L_pos[2] += vertical_offset
+    R_pos[2] += vertical_offset
+    time.sleep(5)
+    node.send_arm_goal(L_pos, R_pos)
+    #maybe this works?!
+
+    #this is assuming xyz?!
+    # print(f'{left=}')
+    # print(f'{right=}')
+    # print(f'{hand_assignments=}')
+
+        # hand_assignments = node.assign_multi_pcs_to_hands(objects)
+    # node.robot_model.sync_subscriber()
+    # node.robot_model.update_kinematics()
+    # node.robot_model.sync_subscriber()
+    # node.robot_model.update_kinematics()
+
+    # while True:
+    #     node.robot_model.sync_subscriber()
+    #     node.robot_model.update_kinematics()
+    #     node.get_left_right_xyz()
+    # node.dest
         # node.robot_model.sync_subscriber()
     # objects = ['drill', 'white object']
     # for obj in objects:
